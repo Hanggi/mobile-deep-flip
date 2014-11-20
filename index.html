@@ -102,7 +102,8 @@
 	// 터치스타트 사건
 	$(window).bind('touchstart', function (e) {
 		timeStart = new Date() * 1;
-		touchS = e.targetTouches[0].pageY;	
+		touchS = e.targetTouches[0].pageY;
+		touchV = 0;
 	});
 	
 	// 터치무브 사건
@@ -153,6 +154,7 @@
 	});
 	//터치 앤더 사건
 	$(window).bind('touchend', function (e) {
+		if (touchV == 0) return;
 		var timeEnd = new Date() * 1;
 		// 조작 속도로 사건 측정
 		if (timeEnd - timeStart > 500) {
@@ -181,7 +183,7 @@
 		$page.css('-webkit-transition', '-webkit-transform ease-out 0.15s');
 		
 		if ((to == 'next' || to > 0) && index < num - 1) {
-			console.log('next')
+			//console.log('next')
 			// 다음 페지
 			$page.css('z-index', 'auto');
 			$page.eq(index).css({'-webkit-transform': 'translate3d(0, 0px, ' + -wHeight/2 + 'px)', 'z-index': '400'});
@@ -189,7 +191,7 @@
 			$page.eq(index-1).hide();
 			index++;
 		}else if ((to == 'prev' || to < 0) && index > 0) {
-			console.log('prev')
+			//console.log('prev')
 			// 전의 페지
 			$page.css('z-index', 'auto');
 			$page.eq(index).css({'-webkit-transform': 'translate3d(0, ' + wHeight + 'px, 0px)', 'z-index': '500'});
@@ -197,12 +199,12 @@
 			$page.eq(index+1).hide();
 			index--;
 		}else if (touchV > 0){
-			console.log('back')
+			//console.log('back')
 			// 원 위치로 돌아 갑니다
 			$page.eq(index).css({'-webkit-transform': 'translate3d(0, 0px, 0px)', 'opacity': 1, 'z-index': 400});
 			$page.eq(index+1).css({'-webkit-transform': 'translate3d(0, ' + wHeight + 'px, 0px)', 'z-index': '500'});
 		}else {
-			console.log('back2')
+			//console.log('back2')
 			$page.eq(index).css({'-webkit-transform': 'translate3d(0, 0px, 0px)', 'opacity': 1, 'z-index': 1000});
 			$page.eq(index-1).css({'-webkit-transform': 'translate3d(0, 0px, ' + -wHeight/2 + 'px)', 'z-index': '400'});
 		}
